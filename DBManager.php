@@ -24,9 +24,11 @@ class DBManager {
 				$dbName = rtrim(ltrim($v));
 			}
 		}
-			$this->client = mysql_connect("$ip:$port", $user, $password, $dbName)
-			or die("Unable to connect to MySQL");
-			$this->selected = mysql_select_db($dbName,$this->client) or die(mysql_error());
+			$this->client = mysqli_connect('localhost', 'demouser','p4ssW0rd1234', 'demodb') or die("Unable to connect to MySQL");
+			//("$ip:$port", $user, $password, $dbName)
+			
+			$this->selected = mysqli_select_db($this->client,$dbName);// or die(mysql_error());
+			//$this->selected = mysql_select_db($dbName,$this->client) or die(mysql_error());
 	  
     }
 
@@ -39,12 +41,13 @@ class DBManager {
 		
 		try{
 			$sql = "CREATE TABLE user(name VARCHAR(255), email VARCHAR(355), description TEXT)";
-			mysql_query($sql,$this->client);
+			//mysql_query($sql,$this->client);
+			mysqli_query($this->client, $sql);
 		}catch(Exception $e){
 				print_r("Table Already Created");
 		}
-		
-		mysql_query("INSERT INTO user(name,email,description) VALUES('$name','$email','$description')");
+		mysqli_query($this->client,"INSERT INTO user(name,email,description) VALUES('$name','$email','$description')");
+		//mysql_query("INSERT INTO user(name,email,description) VALUES('$name','$email','$description')");
     }
 	
 	/*
@@ -53,7 +56,7 @@ class DBManager {
 	
 	function getAllData() {
 		
-		$result = mysql_query("select * from user");
+		$result = mysqli_query($this->client,"select * from user");
 		return $result;
 		
     }

@@ -35,8 +35,8 @@ require_once "DBManager.php";
 $client = new DBManager();
 
 $result = $client->getAllData();
-while ($row = mysql_fetch_array($result)) {
-   echo "<tr><td>".$row{'name'}."</td><td>".$row{'email'}."</td><td>".$row{'description'}."</td></tr>";
+while ($row = mysqli_fetch_array($result)) {
+   echo "<tr><td>".$row['name']."</td><td>".$row['email']."</td><td>".$row['description']."</td></tr>";
 }
 ?>
 </tbody>
